@@ -2,7 +2,7 @@
 #'
 #' This function provides an interface with CEDEN web services to perform queries and programatically download data.
 #' 
-#' @param service The CEDEN web service
+#' @param service The CEDEN web service. For each category of monitoring data (Benthic, Habitat, Tissue, Toxicity, WaterQuality"), there are three types of data available (MonitoringStationsList, ParameterCountsList, ResultsList)
 #' @param query_parameters The query string
 #' @param base_URI The base URL. Defaults to: https://testcedenwebservices.waterboards.ca.gov:9267
 #' @param userName User Name for CEDEN web services
