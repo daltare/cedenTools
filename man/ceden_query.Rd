@@ -10,15 +10,24 @@ ceden_query(service, query_parameters,
 }
 \arguments{
 \item{service}{The CEDEN web service}
+
+\item{query_parameters}{The query string}
+
+\item{base_URI}{The base URL. Defaults to: https://testcedenwebservices.waterboards.ca.gov:9267}
+
+\item{userName}{User Name for CEDEN web services}
+
+\item{password}{Password for CEDEN web services}
 }
 \value{
-dataframe with the data specified in the service and query_parameters
+This function returns a data frame with the data specified in the service and query_parameters arguments
 }
 \description{
-This function provides an interface with CEDEN webservices to download data
+This function provides an interface with CEDEN web services to perform queries and programatically download data.
 }
 \examples{
 ceden_query(service = 'cedenwaterqualitymonitoringstationslist', query_parameters = '"filter":[{"sampleDateMin":"1/1/2015","sampleDateMax":"4/1/2015"}],"top":1000')
+
 }
 \keyword{API}
 \keyword{CEDEN}

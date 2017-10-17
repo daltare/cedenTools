@@ -1,16 +1,20 @@
 #' Download CEDEN data via an API
 #'
 #' This function provides an interface with CEDEN web services to perform queries and programatically download data.
+#' 
 #' @param service The CEDEN web service
 #' @param query_parameters The query string
-#' @param base_URI The base URL (defaults to: )
+#' @param base_URI The base URL. Defaults to: https://testcedenwebservices.waterboards.ca.gov:9267
 #' @param userName User Name for CEDEN web services
 #' @param password Password for CEDEN web services
+#' 
 #' @return This function returns a data frame with the data specified in the service and query_parameters arguments
+#' 
 #' @keywords CEDEN California API
-#' @export
 #' @examples 
 #' ceden_query(service = 'cedenwaterqualitymonitoringstationslist', query_parameters = '"filter":[{"sampleDateMin":"1/1/2015","sampleDateMax":"4/1/2015"}],"top":1000')
+#' 
+#' @export
 ceden_query <- function(service, query_parameters, base_URI = 'https://testcedenwebservices.waterboards.ca.gov:9267', userName = '', password = '') {
     
     # Load packages
