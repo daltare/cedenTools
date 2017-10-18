@@ -68,3 +68,19 @@ test5 <- ceden_query(service = 'cedentoxicitymonitoringstationslist', query_para
 test6 <- ceden_query(service = 'cedentoxicityparametercountslist', query_parameters = '"filter":[{"stationCode":"531SJC503"}]')
 test7 <- ceden_query(service = 'cedentoxicityresultslist', query_parameters = '"filter":[{"stationCode":"531SJC503"}]')
 ```
+
+## Accessing CEDEN Web-Services Without Code
+To access the CEDEN web services without use of a programming language such as R, one alternative option is to use a service such as the [Restlet Client for Chrome](https://chrome.google.com/webstore/detail/restlet-client-rest-api-t/aejoelaoggembcahagimdiliamlcdmfm?hl=en "Restlet Client"). To use the Restlet client with this web service, you first need to get authorization, by using the POST method and entering a URL such as the following (insert your own user name and password):
+```
+https://testcedenwebservices.waterboards.ca.gov:9267/Auth/?provider={"credentials"}&userName={"yourUserNameHere"}&password={"yourPasswordHere"}
+``` 
+In the *Response* section at the bottom of the page, you should see a message saying *200 OK* that is highlighted in green.
+
+Then, you can execute a query with the following steps:
+* Use the GET method
+* Under the Headers section, add an `Accept` header, and enter a type of `text/csv`
+* Enter a query URL, such as the example below:
+```
+https://testcedenwebservices.waterboards.ca.gov:9267/cedenwaterqualityresultslist/?queryParams={"filter":[{"county":"Sacramento","parameter":"E. coli","sampleDateMin":"6/1/2014","sampleDateMax":"7/1/2014"}]}
+```
+You should again see a message in the *Response* section at the bottom of the page saying *200 OK* highlighted in green. To output the data, you can click the *Download* button (towards the bottom right side of the page).
