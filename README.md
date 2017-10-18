@@ -56,7 +56,7 @@ write.csv(data.download, file = '~/Output.csv', row.names = FALSE)
 An example of an application that uses this function to access and visualize data is available at: https://daltare.shinyapps.io/ceden_web_services_test/
 
 ## More Example Function Calls
-These are just some additional examples of calls to the `ceden_query()` function:
+Here are some additional examples of calls to the `ceden_query()` function:
 
 ```
 # Examples ----
