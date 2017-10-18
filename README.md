@@ -2,7 +2,7 @@
 This package defines an R function called `ceden_query()` which helps in working with web services that interface with the CEDEN (California Environmental Data Exchange Network) database. It handles user authentication, retrieves data specified by the query parameters, and returns the data formatted in an R data frame (which can be used for analysis within R, or written to an external file, such as a .csv file).
 
 ## Instructions
-This section describes how to install the function, and how to use the function to construct a query of the CEDEN database.
+This section describes how to install the function, and how to use the function to construct a query of the CEDEN database via the CEDEN web services.
 
 ### Installation
 To install the function, run the following lines of code:
@@ -26,10 +26,10 @@ There are five possible arguments to the `ceden_query()` function, including:
     * One of the following: "Benthic", "Habitat", "Tissue", "Toxicity", "WaterQuality"
     * One of the following: "MonitoringStationsList", "ParameterCountsList", "ResultsList" <br>
 
-For example: *CEDENBenthicMonitoringStationsList*. For more information about the available services, see the documentation for the CEDEN web services.
+For example: *CEDENBenthicMonitoringStationsList*. For more information about the available services, see the [CEDEN web services documentation](/CEDEN%20Web%20Services%20-%20External%20Web%20Services%20Users%20Guide%20-%200.4.docx).
 
-* `query_parameters` (required): The query string (in plain text). This includes everything after the `?queryParams={` statement, except the closing `}` of the query string. For information on how to construct a query string, see the documentation for the CEDEN web services.
-* `base_URI` (required): The base part of the URL for all CEDEN web services (e.g.,"https://cedenwebservices.waterboards.ca.gov"), including a port number if required (use ":9267" if on the State Water Board network).
+* `query_parameters` (required): The query string (in plain text). This includes everything after the `?queryParams={` statement, except the closing `}` of the query string. For information on how to construct a query string, see the [CEDEN web services documentation](/CEDEN%20Web%20Services%20-%20External%20Web%20Services%20Users%20Guide%20-%200.4.docx).
+* `base_URI` (required): The base part of the URL for all CEDEN web services (e.g.,"https://cedenwebservices.waterboards.ca.gov"), including a port number if required (use ":9267" if on the State Water Board network). Defaults to: "https://testcedenwebservices.waterboards.ca.gov:9267"
 * `userName` (optional): The user name for your CEDEN web services account. You can enter this through the function, or if you leave this argument blank the function will look for this information in a variable called `ceden_userName` within the environment variables defined for your account.
 * `password` (optional): The password for your CEDEN web services account. You can enter this through the function, or if you leave this argument blank the function will look for this information in a variable called `ceden_password` within the environment variables defined for your account.
 
