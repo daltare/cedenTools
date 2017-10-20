@@ -25,11 +25,11 @@ There are five possible arguments to the `ceden_query()` function, including:
     *  "CEDEN"
     * One of the following: "Benthic", "Habitat", "Tissue", "Toxicity", "WaterQuality"
     * One of the following: "MonitoringStationsList", "ParameterCountsList", "ResultsList" <br>
+	
+	For example: *CEDENBenthicMonitoringStationsList*. For more information about the available services, see the [CEDEN web services documentation](/CEDEN%20Web%20Services%20-%20External%20Web%20Services%20Users%20Guide%20-%200.4.docx).
 
-For example: *CEDENBenthicMonitoringStationsList*. For more information about the available services, see the [CEDEN web services documentation](/CEDEN%20Web%20Services%20-%20External%20Web%20Services%20Users%20Guide%20-%200.4.docx).
-
-* `query_parameters` (required): The query string (in plain text). This includes everything after the `?queryParams={` statement, except the closing `}` of the query string. For information on how to construct a query string, see the [CEDEN web services documentation](/CEDEN%20Web%20Services%20-%20External%20Web%20Services%20Users%20Guide%20-%200.4.docx).
-* `base_URI` (required): The base part of the URL for all CEDEN web services (e.g.,"https://cedenwebservices.waterboards.ca.gov"), including a port number if required (use ":9267" if on the State Water Board network). Defaults to: "https://testcedenwebservices.waterboards.ca.gov:9267"
+* `query_parameters` (required): The query string (in plain text). This includes everything after the `?queryParams={` statement, except the closing `}` of the query string. Can consist of `filter` (including Max, Min, Not, IsNull, IsNotNull), `orderBy`, `Top`, `Skip`, and/or `Distinct` statements. For information on how to construct a query string, see the [CEDEN web services documentation](/CEDEN%20Web%20Services%20-%20External%20Web%20Services%20Users%20Guide%20-%200.4.docx).
+* `base_URI` (required): The base part of the URL for all CEDEN web services (e.g., https<nolink>://cedenwebservices.waterboards.ca.gov), including a port number if required (use *:9267* if on the State Water Board network). Defaults to: https<nolink>://testcedenwebservices.waterboards.ca.gov:9267
 * `userName` (optional): The user name for your CEDEN web services account. You can enter this through the function, or if you leave this argument blank the function will look for this information in a variable called `ceden_userName` within the environment variables defined for your account.
 * `password` (optional): The password for your CEDEN web services account. You can enter this through the function, or if you leave this argument blank the function will look for this information in a variable called `ceden_password` within the environment variables defined for your account.
 
