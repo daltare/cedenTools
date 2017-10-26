@@ -2,10 +2,10 @@
 This package defines an R function called `ceden_query()` which helps in working with web services that interface with the CEDEN (California Environmental Data Exchange Network) database. It handles user authentication, retrieves data specified by the query parameters, and returns the data formatted in an R data frame (which can be used for analysis within R, or written to an external file, such as a .csv file).
 
 ## Instructions
-This section describes how to install the function, and how to use the function to construct a query of the CEDEN database via the CEDEN web services.
+This section describes how to install the package, and how to use it to construct a query of the CEDEN database via the CEDEN web services.
 
 ### Installation
-To install the function, run the following lines of code:
+To install the package, run the following lines of code:
 ``` 
 install.packages('devtools')
 library(devtools)
@@ -36,8 +36,8 @@ There are five possible arguments to the `ceden_query()` function, including:
 ### Errors
 The function attempts to return an R data frame in all cases, even if the authentication or query is unsuccessful, or if no data is returned because no records satisfy the query parameters. If the function encounters an error which it recognizes, a dataframe will be returned with information about the error. This dataframe includes three columns, regardless of the error type:
 * `Result`: The status of the authentication or query request where the problem was encountered (successful or unsuccessful).
-* `HTTP.Code`: The HTTP status code returned by the request (e.g., `200`, `400`, `401`, etc.). A `200` code indicates success, a `400` code indicates that there is a problem with the request, and a `401` code indicates that authentication was unsuccessful.
-* `API.message`: Any addtional messages about the response from the API, if available.
+* `HTTP.Code`: The HTTP status code returned by the request (e.g., `200`, `400`, `401`, `404`, etc.). In general, a `200` code indicates success, a `400` code indicates that there is a problem with the request, a `401` code indicates that authentication was unsuccessful, and a `404` code likely indicates a problem with the connection to the base URL.
+* `API.message`: Any additional messages about the response from the API, if available.
 
 ## Example Function Call
 This is an example of a CEDEN web services query using this function within R:
