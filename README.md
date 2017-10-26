@@ -33,6 +33,12 @@ There are five possible arguments to the `ceden_query()` function, including:
 * `userName` (optional): The user name for your CEDEN web services account. You can enter this through the function, or if you leave this argument blank the function will look for this information in a variable called `ceden_userName` within the environment variables defined for your account.
 * `password` (optional): The password for your CEDEN web services account. You can enter this through the function, or if you leave this argument blank the function will look for this information in a variable called `ceden_password` within the environment variables defined for your account.
 
+### Errors
+The function attempts to return an R data frame in all cases, even if the authentication or query is unsuccessful, or if no data is returned because no records satisfy the query parameters. If the function encounters an error which it recognizes, a dataframe will be returned with information about the error. This dataframe includes three columns, regardless of the error type:
+* `Result`: The status of the authentication or query request where the problem was encountered (successful or unsuccessful).
+* `HTTP.Code`: The HTTP status code returned by the request (e.g., `200`, `400`, `401`, etc.). A `200` code indicates success, a `400` code indicates that there is a problem with the request, and a `401` code indicates that authentication was unsuccessful.
+* `API.message`: Any addtional messages about the response from the API, if available.
+
 ## Example Function Call
 This is an example of a CEDEN web services query using this function within R:
 
