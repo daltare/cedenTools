@@ -85,6 +85,7 @@ ceden_query <- function(service, query_parameters, base_URI = 'https://testceden
                         message('Query successful, but no data was found that satisfied the query parameters')
                     } else {
                         query_Results <- query_Results %>% select(-metadata) # Drop the metadata columns that are included in the data
+                        query_Results <- as_tibble(query_Results)
                         message('Query successful, and data satisfying the query parameters was returned')
                     }
                 } else { # if the query was successful but JSON not valid
