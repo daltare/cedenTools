@@ -6,7 +6,7 @@
 \usage{
 ceden_query(service, query_parameters,
   base_URI = "https://testcedenwebservices.waterboards.ca.gov:9267",
-  userName = "", password = "")
+  userName = "", password = "", errorMessages_out = TRUE)
 }
 \arguments{
 \item{service}{A text string representing one of the 15 CEDEN advanced query tool services.
@@ -30,9 +30,17 @@ in a variable called `ceden_userName` within the environment variables defined f
 \item{password}{The password for your CEDEN web services account. You can enter this through
 the function, or if you leave this argument blank the function will look for this information
 in a variable called `ceden_password` within the environment variables defined for your account.}
+
+\item{errorMessages_out}{When set to \code{TRUE}, if there is an error with the
+authentication or the query request (inclduing when there is simply no data returned that meets
+the query parameters), the function will attempt to return a data frame with information about
+the error (including where the error occured, the HTTP code returned, and any messages about the API
+response). When set to \code{FALSE}, the function will simply return \code{NA} on an error.}
 }
 \value{
-This function returns a data frame with the data specified in the \code{service} and \code{query_parameters} arguments.
+This function returns a data frame with the data specified in the \code{service}
+and \code{query_parameters} arguments. On an error, the output will depend on the value
+of the \code{errorMessages_out} parameter.
 }
 \description{
 This function provides an interface with CEDEN web services to perform queries and programatically download data.
@@ -53,3 +61,7 @@ data.download <- ceden_query(service = 'cedenwaterqualityresultslist', query_par
 \keyword{API}
 \keyword{CEDEN}
 \keyword{California}
+\keyword{Data}
+\keyword{Environmental}
+\keyword{Exchange}
+\keyword{Network}
