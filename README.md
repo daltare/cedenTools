@@ -1,5 +1,5 @@
 ## Overview
-This package defines an R function called `ceden_query()` which helps in working with web services that interface with the CEDEN (California Environmental Data Exchange Network) database. It handles user authentication, retrieves data specified by the query parameters, and returns the data formatted in an R data frame (which can be used for analysis within R, or written to an external file, such as a .csv file).
+This package defines an R function called `ceden_query()` which helps in working with web services that interface with the [CEDEN (California Environmental Data Exchange Network) database](http://www.ceden.org/). It handles user authentication, retrieves data specified by the query parameters, and returns the data formatted in an R data frame (which can be used for analysis within R, or written to an external file, such as a .csv file).
 
 ## Instructions
 This section describes how to install the package, and how to use it to construct a query of the CEDEN database via the CEDEN web services.
@@ -32,12 +32,15 @@ There are five possible arguments to the `ceden_query()` function, including:
 * `base_URI` (required): The base part of the URL for all CEDEN web services (e.g., https<nolink>://cedenwebservices.waterboards.ca.gov), including a port number if required (use *:9267* if on the State Water Board network). Defaults to: https<nolink>://testcedenwebservices.waterboards.ca.gov:9267
 * `userName` (optional): The user name for your CEDEN web services account. You can enter this through the function, or if you leave this argument blank the function will look for this information in a variable called `ceden_userName` within the environment variables defined for your account.
 * `password` (optional): The password for your CEDEN web services account. You can enter this through the function, or if you leave this argument blank the function will look for this information in a variable called `ceden_password` within the environment variables defined for your account.
+* `errorMessages_out` (optional): When set to `TRUE`, if there is an error with the authentication or the query request (inclduing when there is simply no data returned that meets the query parameters), the function will attempt to return a data frame with information about the error (including where the error occured, the HTTP code returned, and any messages about the API response). When set to `FALSE`, the function will simply return `NA` on an error. Defaults to `TRUE`.
 
 ### Errors
 The function attempts to return an R data frame in all cases, even if the authentication or query is unsuccessful, or if no data is returned because no records satisfy the query parameters. If the function encounters an error which it recognizes, a dataframe will be returned with information about the error. This dataframe includes three columns, regardless of the error type:
 * `Result`: The status of the authentication or query request where the problem was encountered (successful or unsuccessful).
 * `HTTP.Code`: The HTTP status code returned by the request (e.g., `200`, `400`, `401`, `404`, etc.). In general, a `200` code indicates success, a `400` code indicates that there is a problem with the request, a `401` code indicates that authentication was unsuccessful, and a `404` code likely indicates a problem with the connection to the base URL.
-* `API.message`: Any additional messages about the response from the API, if available.
+* `API.Message`: Any additional messages about the response from the API, if available.
+
+To disable this output and simply return an `NA` on an error, set the `errorMessages_out` parameter to `FALSE`.
 
 ## Example Function Call
 This is an example of a CEDEN web services query using this function within R:

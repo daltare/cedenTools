@@ -19,10 +19,19 @@
 #' @param password The password for your CEDEN web services account. You can enter this through
 #' the function, or if you leave this argument blank the function will look for this information
 #' in a variable called `ceden_password` within the environment variables defined for your account.
+#' @param errorMessages_out When set to \code{TRUE}, if there is an error with the
+#' authentication or the query request (inclduing when there is simply no data returned that meets
+#' the query parameters), the function will attempt to return a data frame with information about
+#' the error (including where the error occured, the HTTP code returned, and any messages about the API
+#' response). When set to \code{FALSE}, the function will simply return \code{NA} when there is
+#' an error.
 #'
-#' @return This function returns a data frame with the data specified in the \code{service} and \code{query_parameters} arguments.
 #'
-#' @keywords CEDEN California API
+#' @return This function returns a data frame with the data specified in the \code{service}
+#' and \code{query_parameters} arguments. On an error, the output will depend on the value
+#' of the \code{errorMessages_out} parameter.
+#'
+#' @keywords CEDEN California Environmental Data Exchange Network API
 #'
 #' @examples
 #' All of these examples return the data to a data frame called: data.download
