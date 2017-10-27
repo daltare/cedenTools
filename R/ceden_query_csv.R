@@ -4,7 +4,7 @@
 #' This function may be able to handle larger requests than the \code{ceden_query} function. It is identical to the 
 #' \code{ceden_query} function, except that it requests data from the API in csv format instead of JSON. As a result, 
 #' there may be some slight differences in the format of the data (for instance, some column names may be slightly 
-#' different than those returned with the \code{ceden_query} function.
+#' different than those returned with the \code{ceden_query} function).
 #'
 #' @param service A text string representing one of the 15 CEDEN advanced query tool services.
 #' For each of the 5 categories of monitoring data (Benthic, Habitat, Tissue, Toxicity, WaterQuality),

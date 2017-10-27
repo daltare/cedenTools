@@ -47,7 +47,7 @@ This function provides an interface with CEDEN web services to perform queries a
 This function may be able to handle larger requests than the \code{ceden_query} function. It is identical to the 
 \code{ceden_query} function, except that it requests data from the API in csv format instead of JSON. As a result, 
 there may be some slight differences in the format of the data (for instance, some column names may be slightly 
-different than those returned with the \code{ceden_query} function.
+different than those returned with the \code{ceden_query} function).
 }
 \examples{
 All of these examples return the data to a data frame called: data.download

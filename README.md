@@ -1,6 +1,8 @@
 ## Overview
 This package defines an R function called `ceden_query()` which helps in working with web services that interface with the [CEDEN (California Environmental Data Exchange Network) database](http://www.ceden.org/). It handles user authentication, retrieves data specified by the query parameters, and returns the data formatted in an R data frame (which can be used for analysis within R, or written to an external file, such as a .csv file).
 
+A second function, `ceden_query_csv()` is also available and is virtually identical to the `ceden_query()` function, but can handle large requests than `ceden_query()`. `ceden_query_csv()` requests data from the API in csv format instead of JSON. As a result, there may be some slight differences in the format of the data returned (for instance, some column names may be slightly different than those returned with the `ceden_query()` function). The installation and usage instructions are the same for the two functions.
+
 ## Instructions
 This section describes how to install the package, and how to use it to construct a query of the CEDEN database via the CEDEN web services.
 
@@ -8,8 +10,7 @@ This section describes how to install the package, and how to use it to construc
 To install the package, run the following lines of code:
 ``` 
 install.packages('devtools')
-library(devtools)
-install_github('daltare/cedenTools')
+devtools::install_github('daltare/cedenTools')
 library(cedenTools)
 ```
 
@@ -20,7 +21,7 @@ source('~/ceden_query.R')
 ```
 
 ### Function Parameters
-There are five possible arguments to the `ceden_query()` function, including:
+There are six possible arguments to the `ceden_query()` function, including:
 * `service` (required): A text string representing one of the 15 CEDEN advanced query tool services. The string is composed of the three following components:
     *  "CEDEN"
     * One of the following: "Benthic", "Habitat", "Tissue", "Toxicity", "WaterQuality"
