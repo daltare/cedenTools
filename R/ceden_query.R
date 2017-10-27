@@ -37,7 +37,7 @@
 #' data.download <- ceden_query(service = 'cedenwaterqualityresultslist', query_parameters = '"filter":[{"county":"Sacramento","parameter":"/%Nitrogen/%","sampleDateMin":"1/1/2014","sampleDateMax":"12/31/2014"}]', userName = 'user', password = 'password', base_URI = 'https://testcedenwebservices.waterboards.ca.gov')
 #'
 #' @export
-ceden_query <- function(service, query_parameters, base_URI = 'https://testcedenwebservices.waterboards.ca.gov:9267', userName = '', password = '') {
+ceden_query <- function(service, query_parameters, base_URI = 'https://testcedenwebservices.waterboards.ca.gov:9267', userName = '', password = '', errorMessages_out = TRUE) {
 
     # Load packages ----
         function_packages <- c('httr', 'jsonlite', 'dplyr', 'urltools', 'tidyverse')
@@ -118,5 +118,11 @@ ceden_query <- function(service, query_parameters, base_URI = 'https://testceden
                 }
             }
         }
+
+        # if error message outputs are turned off (FALSE) and an error is returned, change the output to NA instead of the data frame of error info
+        if (errorMessages_out == FALSE & names(query_Results)[1] == 'Result' & names(query_Results)[2] == 'HTTP.Code' & names(query_Results)[3] == 'API.Message') {
+            query_Results <- NA
+        }
+
         return(query_Results) # output the resulting dataframe
 }
