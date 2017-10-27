@@ -1,10 +1,9 @@
 #' Download CEDEN data via an API
 #'
-#' This function provides an interface with CEDEN web services to perform queries and programatically download data. 
-#' This function may be able to handle larger requests than the \code{ceden_query} function. It is identical to the 
-#' \code{ceden_query} function, except that it requests data from the API in csv format instead of JSON. As a result, 
-#' there may be some slight differences in the format of the data (for instance, some column names may be slightly 
-#' different than those returned with the \code{ceden_query} function).
+#' This function provides an interface with CEDEN web services to perform queries and programatically download data.
+#' This function may be able to handle larger requests than the \code{ceden_query} function. It is identical to the
+#' \code{ceden_query} function, except that it requests data from the API in csv format instead of JSON. As a result,
+#' there could possibly be some slight differences in the format of the data returned by the two functions.
 #'
 #' @param service A text string representing one of the 15 CEDEN advanced query tool services.
 #' For each of the 5 categories of monitoring data (Benthic, Habitat, Tissue, Toxicity, WaterQuality),
@@ -50,7 +49,7 @@
 #'
 #' @export
 ceden_query_csv <- function(service, query_parameters, base_URI = 'https://testcedenwebservices.waterboards.ca.gov:9267', userName = '', password = '', errorMessages_out = TRUE) {
-    
+
     # Load packages ----
     function_packages <- c('httr', 'jsonlite', 'dplyr', 'urltools', 'tidyverse')
     check_packages <- function_packages %in% installed.packages()
@@ -61,7 +60,7 @@ ceden_query_csv <- function(service, query_parameters, base_URI = 'https://testc
         suppressMessages(install.packages(i, dependencies = TRUE))
         suppressMessages(library(i, character.only = TRUE))
     }
-    
+
     # Check to see if the user has entered a username and password with the function. If not, get it from the user's environment variables. ----
     if (userName == '') {
         userName <- Sys.getenv('ceden_userName')
@@ -69,7 +68,7 @@ ceden_query_csv <- function(service, query_parameters, base_URI = 'https://testc
     if (password == '') {
         password <- Sys.getenv('ceden_password')
     }
-    
+
     # Authorization (send a POST request with the username and password) ----
     auth_Request <- paste0(base_URI, '/Auth/?provider=credentials&userName=', userName, '&password=', password) # build the string for the request
     auth_Response <- POST(auth_Request) # send the request
@@ -78,14 +77,14 @@ ceden_query_csv <- function(service, query_parameters, base_URI = 'https://testc
         message(paste0('Authentication unsuccessful. HTTP error code: ', auth_Response$status_code))
         query_Results <- data_frame('Result'='Authentication unsuccessful', 'HTTP.Code' = auth_Response$status_code, 'API.Message' = NA)
     }
-    
+
     # Query (send a GET request with the relevant parameters) ----
     if (auth_Response$status_code == 200) { # if authentication is successful, send the query (send a GET request with the relevant parameters)
         query_formatted <- url_encode(paste0('{', query_parameters, '}')) # encode the query parameters into a format suitable for HTTP
         query_URI <- paste0(base_URI,'/', service, '/?queryParams=', query_formatted) # build the string for the request
         query_Response <- GET(query_URI, accept('text/csv')) # send the request
         query_Char <- rawToChar(query_Response$content)
-        
+
         # Check if the query was successful. If so, convert the returned string into an R object
         if(query_Response$status_code == 200) {
             if (query_Char == "") {
@@ -94,10 +93,10 @@ ceden_query_csv <- function(service, query_parameters, base_URI = 'https://testc
             } else { # if there is data
                 query_Results <- read.csv(text = query_Char)
                 query_Results <- as_tibble(query_Results)
-                message('Query successful, and data satisfying the query parameters was returned')               
+                message('Query successful, and data satisfying the query parameters was returned')
             }
         }
-        
+
         if(query_Response$status_code != 200) {
             if (validate(query_Char) == TRUE) {
                 error_Content <- fromJSON(query_Char)
@@ -117,6 +116,6 @@ ceden_query_csv <- function(service, query_parameters, base_URI = 'https://testc
     if (errorMessages_out == FALSE & names(query_Results)[1] == 'Result' & names(query_Results)[2] == 'HTTP.Code' & names(query_Results)[3] == 'API.Message') {
         query_Results <- NA
     }
-    
+
     return(query_Results) # output the resulting dataframe
 }

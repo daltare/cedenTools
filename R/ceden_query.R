@@ -94,6 +94,8 @@ ceden_query <- function(service, query_parameters, base_URI = 'https://testceden
                     } else {
                         query_Results <- query_Results %>% select(-metadata) # Drop the metadata columns that are included in the data
                         query_Results <- as_tibble(query_Results)
+                        # make the name of each column start with an uppercase letter, to match the results of the ceden_query_csv function
+                            names(query_Results) <- paste0(toupper(substr(x = names(query_Results), start = 1, stop = 1)), substr(x = names(query_Results), start = 2, stop = nchar(names(query_Results))))
                         message('Query successful, and data satisfying the query parameters was returned')
                     }
                 } else { # if the query was successful but JSON not valid

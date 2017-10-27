@@ -1,7 +1,7 @@
 ## Overview
 This package defines an R function called `ceden_query()` which helps in working with web services that interface with the [CEDEN (California Environmental Data Exchange Network) database](http://www.ceden.org/). It handles user authentication, retrieves data specified by the query parameters, and returns the data formatted in an R data frame (which can be used for analysis within R, or written to an external file, such as a .csv file).
 
-A second function, `ceden_query_csv()` is also available and is virtually identical to the `ceden_query()` function, but can handle large requests than `ceden_query()`. `ceden_query_csv()` requests data from the API in csv format instead of JSON. As a result, there may be some slight differences in the format of the data returned (for instance, some column names may be slightly different than those returned with the `ceden_query()` function). The installation and usage instructions are the same for the two functions.
+A second function, `ceden_query_csv()` is also available and is virtually identical to the `ceden_query()` function, but can handle large requests than `ceden_query()`. `ceden_query_csv()` requests data from the API in csv format instead of JSON. As a result, there could possibly be some slight differences in the format of the data returned by the two functions. The installation and usage instructions are the same for the two functions.
 
 ## Instructions
 This section describes how to install the package, and how to use it to construct a query of the CEDEN database via the CEDEN web services.
