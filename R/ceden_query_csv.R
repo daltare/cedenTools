@@ -55,17 +55,6 @@
 #' @export
 ceden_query_csv <- function(service, query_parameters, base_URI = 'https://testcedenwebservices.waterboards.ca.gov:9267', userName = '', password = '', errorMessages_out = TRUE) {
 
-    # Load packages ----
-    # function_packages <- c('httr', 'jsonlite', 'dplyr', 'urltools')
-    # check_packages <- function_packages %in% installed.packages()
-    # for (i in function_packages[check_packages]) {
-    #     suppressMessages(library(i, character.only = TRUE))
-    # }
-    # for (i in function_packages[!check_packages]) {
-    #     suppressMessages(install.packages(i, dependencies = TRUE))
-    #     suppressMessages(library(i, character.only = TRUE))
-    # }
-
     # Check to see if the user has entered a username and password with the function. If not, get it from the user's environment variables. ----
     if (userName == '') {
         userName <- Sys.getenv('ceden_userName')
