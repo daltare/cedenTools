@@ -28,7 +28,7 @@
 #' the error (including where the error occured, the HTTP code returned, and any messages about the API
 #' response). When set to \code{FALSE}, the function will simply return \code{NA} on an error.
 #'
-#' @importFrom httr POST GET
+#' @importFrom httr POST GET accept
 #' @importFrom jsonlite validate fromJSON
 #' @importFrom dplyr data_frame as_tibble
 #' @importFrom urltools url_encode
@@ -87,7 +87,7 @@ ceden_query_csv <- function(service, query_parameters, base_URI = 'https://testc
     if (auth_Response$status_code == 200) { # if authentication is successful, send the query (send a GET request with the relevant parameters)
         query_formatted <- urltools::url_encode(paste0('{', query_parameters, '}')) # encode the query parameters into a format suitable for HTTP
         query_URI <- paste0(base_URI,'/', service, '/?queryParams=', query_formatted) # build the string for the request
-        query_Response <- httr::GET(query_URI, accept('text/csv')) # send the request
+        query_Response <- httr::GET(query_URI, httr::accept('text/csv')) # send the request
         query_Char <- rawToChar(query_Response$content)
 
         # Check if the query was successful. If so, convert the returned string into an R object
