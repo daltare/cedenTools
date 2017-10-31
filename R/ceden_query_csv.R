@@ -28,10 +28,11 @@
 #' the error (including where the error occured, the HTTP code returned, and any messages about the API
 #' response). When set to \code{FALSE}, the function will simply return \code{NA} on an error.
 #'
-#' @import httr
-#' @import jsonlite
-#' @import dplyr
-#' @import urltools
+#' @importFrom httr POST GET
+#' @importFrom jsonlite validate fromJSON
+#' @importFrom dplyr data_frame as_tibble
+#' @importFrom urltools url_encode
+#' @importFrom magrittr %>%
 #'
 #' @return This function returns a data frame with the data specified in the \code{service}
 #' and \code{query_parameters} arguments. On an error, the output will depend on the value
