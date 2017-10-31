@@ -28,6 +28,10 @@
 #' the error (including where the error occured, the HTTP code returned, and any messages about the API
 #' response). When set to \code{FALSE}, the function will simply return \code{NA} on an error.
 #'
+#' @import httr
+#' @import jsonlite
+#' @import dplyr
+#' @import urltools
 #'
 #' @return This function returns a data frame with the data specified in the \code{service}
 #' and \code{query_parameters} arguments. On an error, the output will depend on the value
@@ -51,15 +55,15 @@
 ceden_query_csv <- function(service, query_parameters, base_URI = 'https://testcedenwebservices.waterboards.ca.gov:9267', userName = '', password = '', errorMessages_out = TRUE) {
 
     # Load packages ----
-    function_packages <- c('httr', 'jsonlite', 'dplyr', 'urltools', 'tidyverse')
-    check_packages <- function_packages %in% installed.packages()
-    for (i in function_packages[check_packages]) {
-        suppressMessages(library(i, character.only = TRUE))
-    }
-    for (i in function_packages[!check_packages]) {
-        suppressMessages(install.packages(i, dependencies = TRUE))
-        suppressMessages(library(i, character.only = TRUE))
-    }
+    # function_packages <- c('httr', 'jsonlite', 'dplyr', 'urltools')
+    # check_packages <- function_packages %in% installed.packages()
+    # for (i in function_packages[check_packages]) {
+    #     suppressMessages(library(i, character.only = TRUE))
+    # }
+    # for (i in function_packages[!check_packages]) {
+    #     suppressMessages(install.packages(i, dependencies = TRUE))
+    #     suppressMessages(library(i, character.only = TRUE))
+    # }
 
     # Check to see if the user has entered a username and password with the function. If not, get it from the user's environment variables. ----
     if (userName == '') {
@@ -71,42 +75,42 @@ ceden_query_csv <- function(service, query_parameters, base_URI = 'https://testc
 
     # Authorization (send a POST request with the username and password) ----
     auth_Request <- paste0(base_URI, '/Auth/?provider=credentials&userName=', userName, '&password=', password) # build the string for the request
-    auth_Response <- POST(auth_Request) # send the request
+    auth_Response <- httr::POST(auth_Request) # send the request
     # Check whether the authentication was successful. If not, stop the function, and report the HTTP errror code to the user.
     if(auth_Response$status_code != 200) {
         message(paste0('Authentication unsuccessful. HTTP error code: ', auth_Response$status_code))
-        query_Results <- data_frame('Result'='Authentication unsuccessful', 'HTTP.Code' = auth_Response$status_code, 'API.Message' = NA)
+        query_Results <- dplyr::data_frame('Result'='Authentication unsuccessful', 'HTTP.Code' = auth_Response$status_code, 'API.Message' = NA)
     }
 
     # Query (send a GET request with the relevant parameters) ----
     if (auth_Response$status_code == 200) { # if authentication is successful, send the query (send a GET request with the relevant parameters)
-        query_formatted <- url_encode(paste0('{', query_parameters, '}')) # encode the query parameters into a format suitable for HTTP
+        query_formatted <- urltools::url_encode(paste0('{', query_parameters, '}')) # encode the query parameters into a format suitable for HTTP
         query_URI <- paste0(base_URI,'/', service, '/?queryParams=', query_formatted) # build the string for the request
-        query_Response <- GET(query_URI, accept('text/csv')) # send the request
+        query_Response <- httr::GET(query_URI, accept('text/csv')) # send the request
         query_Char <- rawToChar(query_Response$content)
 
         # Check if the query was successful. If so, convert the returned string into an R object
         if(query_Response$status_code == 200) {
             if (query_Char == "") {
-                query_Results <- data_frame('Result' = 'Query successful', 'HTTP.Code' = 200,  'API.Message' = 'No data was found that satisfied the query parameters')
+                query_Results <- dplyr::data_frame('Result' = 'Query successful', 'HTTP.Code' = 200,  'API.Message' = 'No data was found that satisfied the query parameters')
                 message('Query successful, but no data was found that satisfied the query parameters')
             } else { # if there is data
                 query_Results <- read.csv(text = query_Char)
-                query_Results <- as_tibble(query_Results)
+                query_Results <- dplyr::as_tibble(query_Results)
                 message('Query successful, and data satisfying the query parameters was returned')
             }
         }
 
         if(query_Response$status_code != 200) {
-            if (validate(query_Char) == TRUE) {
-                error_Content <- fromJSON(query_Char)
+            if (jsonlite::validate(query_Char) == TRUE) {
+                error_Content <- jsonlite::fromJSON(query_Char)
                 error_Code <- error_Content$responseStatus$errorCode
                 error_Message <- error_Content$responseStatus$message
                 # create the output with the error information, and return a message to the console
-                    query_Results <- data_frame('Result' = 'Query unsuccessful', 'HTTP.Code' = query_Response$status_code, 'API.Message'= paste0(error_Code, ' -- ', error_Message))
+                    query_Results <- dplyr::data_frame('Result' = 'Query unsuccessful', 'HTTP.Code' = query_Response$status_code, 'API.Message'= paste0(error_Code, ' -- ', error_Message))
                     message(paste0('Query unsuccessful', '\nHTTP error code: ', query_Response$status_code, '\nAPI Error Message: ', error_Code, ' -- ', error_Message))
             } else { # if the error response is in the form of JSON that can't be parsed
-                query_Results <- data_frame('Result' = 'Query unsuccessful', 'HTTP.Code' = query_Response$status_code, 'API.Message'= paste0('The error message can not be parsed. Here is the returned JSON string: ', query_Char))
+                query_Results <- dplyr::data_frame('Result' = 'Query unsuccessful', 'HTTP.Code' = query_Response$status_code, 'API.Message'= paste0('The error message can not be parsed. Here is the returned JSON string: ', query_Char))
                 message(paste0('Query unsuccessful', '\nHTTP error code: ', query_Response$status_code, '\nAPI Error Message: The error response can not be parsed. Here is the returned JSON string: ', query_Char))
             }
         }
