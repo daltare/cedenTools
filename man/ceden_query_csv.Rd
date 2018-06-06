@@ -5,7 +5,7 @@
 \title{Download CEDEN data via an API}
 \usage{
 ceden_query_csv(service, query_parameters,
-  base_URI = "https://testcedenwebservices.waterboards.ca.gov:9267",
+  base_URI = "https://cedenwebservices.waterboards.ca.gov:9267",
   userName = "", password = "", errorMessages_out = TRUE)
 }
 \arguments{
@@ -21,7 +21,7 @@ to construct a query string, see the documentation for the CEDEN web services.}
 \item{base_URI}{The base part of the URL for all CEDEN web services
 (e.g.,https://cedenwebservices.waterboards.ca.gov), including a port number if required
 (use ":9267" if on the State Water Board network). Defaults to:
-https://testcedenwebservices.waterboards.ca.gov:9267}
+https://cedenwebservices.waterboards.ca.gov:9267}
 
 \item{userName}{The user name for your CEDEN web services account. You can enter this through
 the function, or if you leave this argument blank the function will look for this information
@@ -58,7 +58,7 @@ data.download <- ceden_query_csv(service = 'cedenwaterqualitymonitoringstationsl
 data.download <- ceden_query_csv(service = 'cedenwaterqualityresultslist', query_parameters = '"filter":[{"county":"Sacramento","parameter":"E. coli","sampleDateMin":"6/1/2014","sampleDateMax":"7/1/2014"},{"county":"San Joaquin","parameter":"E. coli","sampleDateMin":"6/1/2014","sampleDateMax":"7/1/2014"}]')
 
 # Get all water quality results in Sacramento from the year 2014 where the parameter name contains the name Nitrogen (note use of the wildcard /\%)
-data.download <- ceden_query_csv(service = 'cedenwaterqualityresultslist', query_parameters = '"filter":[{"county":"Sacramento","parameter":"/\%Nitrogen/\%","sampleDateMin":"1/1/2014","sampleDateMax":"12/31/2014"}]', userName = 'user', password = 'password', base_URI = 'https://testcedenwebservices.waterboards.ca.gov')
+data.download <- ceden_query_csv(service = 'cedenwaterqualityresultslist', query_parameters = '"filter":[{"county":"Sacramento","parameter":"/\%Nitrogen/\%","sampleDateMin":"1/1/2014","sampleDateMax":"12/31/2014"}]', userName = 'user', password = 'password', base_URI = 'https://cedenwebservices.waterboards.ca.gov')
 
 }
 \keyword{API}

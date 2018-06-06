@@ -7,7 +7,7 @@ A second function, `ceden_query_csv()` is also available and is virtually identi
 This section describes how to install the package, and how to use it to construct a query of the CEDEN database via the CEDEN web services.
 
 ### Installation
-To install the package, run the following lines of code:
+To install and load the package, run the following lines of code:
 ``` 
 install.packages('devtools')
 devtools::install_github('daltare/cedenTools')
@@ -30,9 +30,9 @@ There are six possible arguments to the `ceden_query()` function, including:
 	For example: *CEDENBenthicMonitoringStationsList*. For more information about the available services, see the [CEDEN web services documentation](/CEDEN%20Web%20Services%20-%20External%20Web%20Services%20Users%20Guide%20-%200.4.docx).
 
 * `query_parameters` (required): The query string (in plain text). This includes everything after the `?queryParams={` statement, except the closing `}` of the query string. Can consist of `filter` (including Max, Min, Not, IsNull, IsNotNull), `orderBy`, `Top`, `Skip`, and/or `Distinct` statements. For information on how to construct a query string, see the [CEDEN web services documentation](/CEDEN%20Web%20Services%20-%20External%20Web%20Services%20Users%20Guide%20-%200.4.docx).
-* `base_URI` (required): The base part of the URL for all CEDEN web services (e.g., https<nolink>://cedenwebservices.waterboards.ca.gov), including a port number if required (use *:9267* if on the State Water Board network). Defaults to: https<nolink>://testcedenwebservices.waterboards.ca.gov:9267
-* `userName` (optional): The user name for your CEDEN web services account. You can enter this through the function, or if you leave this argument blank the function will look for this information in a variable called `ceden_userName` within the environment variables defined for your account.
-* `password` (optional): The password for your CEDEN web services account. You can enter this through the function, or if you leave this argument blank the function will look for this information in a variable called `ceden_password` within the environment variables defined for your account.
+* `base_URI` (required): The base part of the URL for all CEDEN web services (e.g., https<nolink>://cedenwebservices.waterboards.ca.gov), including a port number if required (use *:9267* if on the State Water Board network). Defaults to: https<nolink>://cedenwebservices.waterboards.ca.gov:9267
+* `userName` (optional): The user name for your CEDEN web services account (NOTE: if you don't already have an account, you can [send a message to David Altare](mailto:david.altare@waterboards.ca.gov) to request one). You can enter this through the function, or if you leave this argument blank the function will look for this information in a variable called `ceden_userName` within the environment variables defined for your account.
+* `password` (optional): The password for your CEDEN web services account (NOTE: if you don't already have an account, you can [send a message to David Altare](mailto:david.altare@waterboards.ca.gov) to request one). You can enter this through the function, or if you leave this argument blank the function will look for this information in a variable called `ceden_password` within the environment variables defined for your account.
 * `errorMessages_out` (optional): When set to `TRUE`, if there is an error with the authentication or the query request (inclduing when there is simply no data returned that meets the query parameters), the function will attempt to return a data frame with information about the error (including where the error occured, the HTTP code returned, and any messages about the API response). When set to `FALSE`, the function will simply return `NA` on an error. Defaults to `TRUE`.
 
 ### Errors
@@ -82,7 +82,7 @@ test7 <- ceden_query(service = 'cedentoxicityresultslist', query_parameters = '"
 ## Accessing CEDEN Web-Services Without Code
 To access the CEDEN web services without use of a programming language such as R, one alternative option is to use a service such as the [Restlet Client for Chrome](https://chrome.google.com/webstore/detail/restlet-client-rest-api-t/aejoelaoggembcahagimdiliamlcdmfm?hl=en "Restlet Client"). To use the Restlet client with this web service, you first need to get authorization, by using the POST method and entering a URL such as the following (insert your own user name and password):
 ```
-https://testcedenwebservices.waterboards.ca.gov:9267/Auth/?provider={"credentials"}&userName={"yourUserNameHere"}&password={"yourPasswordHere"}
+https://cedenwebservices.waterboards.ca.gov:9267/Auth/?provider={"credentials"}&userName={"yourUserNameHere"}&password={"yourPasswordHere"}
 ``` 
 In the *Response* section at the bottom of the page, you should see a message saying *200 OK* that is highlighted in green.
 
@@ -91,6 +91,6 @@ Then, you can execute a query with the following steps:
 * Under the Headers section, add an `Accept` header, and enter a type of `text/csv`
 * Enter a query URL, such as the example below:
 ```
-https://testcedenwebservices.waterboards.ca.gov:9267/cedenwaterqualityresultslist/?queryParams={"filter":[{"county":"Sacramento","parameter":"E. coli","sampleDateMin":"6/1/2014","sampleDateMax":"7/1/2014"}]}
+https://cedenwebservices.waterboards.ca.gov:9267/cedenwaterqualityresultslist/?queryParams={"filter":[{"county":"Sacramento","parameter":"E. coli","sampleDateMin":"6/1/2014","sampleDateMax":"7/1/2014"}]}
 ```
 You should again see a message in the *Response* section at the bottom of the page saying *200 OK* highlighted in green. To output the data, you can click the *Download* button (towards the bottom right side of the page).
