@@ -1,3 +1,6 @@
+## **** NOTE: THIS PACKAGE IS NO LONGER BEING MAINTAINED ****
+**This package is no longer being actively maintained, and may not be functional. It is made available here for reference only.**
+
 ## Overview
 This package defines an R function called `ceden_query()` which helps in working with web services that interface with the [CEDEN (California Environmental Data Exchange Network) database](http://www.ceden.org/). It handles user authentication, retrieves data specified by the query parameters, and returns the data formatted in an R data frame (which can be used for analysis within R, or written to an external file, such as a .csv file).
 
