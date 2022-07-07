@@ -11,9 +11,11 @@
 -   [**Benthic**](https://data.ca.gov/dataset/surface-water-benthic-macroinvertebrate-results)
 -   [**Sampling Locations**](https://data.ca.gov/dataset/surface-water-sampling-location-information)
 
-**An example of how to use the CA Open Data Portal's API to access the resources listed above is available [here](https://gist.github.com/daltare/2de1517ad1e315c4b1cad01278de96dd).**
+**An example of how to use the CA Open Data Portal's API to access the resources listed above is available [here](https://gist.github.com/daltare/2de1517ad1e315c4b1cad01278de96dd). You can also find an example of how to download filtered (or complete) csv files using persistent links for the above resources [here](https://gist.github.com/daltare/a934669c8933c3ebd955f18dfb198456).**
 
-## Overview
+------------------------------------------------------------------------
+
+## Package Overview
 
 This package defines an R function called `ceden_query()` which helps in working with web services that interface with the [CEDEN (California Environmental Data Exchange Network) database](http://www.ceden.org/). It handles user authentication, retrieves data specified by the query parameters, and returns the data formatted in an R data frame (which can be used for analysis within R, or written to an external file, such as a .csv file).
 
